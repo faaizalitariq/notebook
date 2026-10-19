@@ -1,0 +1,36 @@
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #24231f;
+  background: #f8f6ef;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --paper: #f8f6ef;
+  --paper-alt: #fffdf7;
+  --ink: #24231f;
+  --muted: #77736b;
+  --line: #d9d5c9;
+  --accent: #a4473d;
+  --blue-grid: rgba(112, 145, 169, 0.14);
+  --shadow: 4px 5px 0 rgba(43, 39, 30, 0.07);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+body, button, a { color: var(--ink); }
+a { text-decoration: none; }
+button, input, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+::selection { color: var(--paper-alt); background: var(--accent); }
+:focus-visible { outline: 2px dashed var(--accent); outline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
