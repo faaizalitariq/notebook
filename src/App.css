@@ -137,7 +137,10 @@ h2 { margin:8px 0 0; font-size:clamp(34px,4vw,49px); line-height:1.05; letter-sp
   transform:translate(-50%,-50%);
   border-radius:50%; object-fit:cover; object-position:center top;
   border:2px solid var(--ink);
-  box-shadow:0 0 0 8px var(--paper), var(--shadow);
+  box-shadow:
+    0 20px 30px -10px rgba(0, 0, 0, 0.35),
+    0 8px 15px -5px rgba(0, 0, 0, 0.2),
+    0 0 0 8px var(--paper);
   background:var(--paper-alt);
 }
 .portrait-note {
