@@ -1,5 +1,6 @@
 import {
   ArrowDownRight,
+  Download,
   ArrowUpRight,
   Mail,
   Code2,
@@ -7,271 +8,501 @@ import {
   Workflow,
   Sparkles,
   UserRound,
-  Phone
+  Phone,
+  Plus,
 } from "lucide-react";
 import "./App.css";
 import portrait from "./images/portrait-480.webp";
 
+// The download appears automatically once the approved CV PDF is added.
+const cvFiles = import.meta.glob("./assets/Faaiz_Main_Resume.pdf", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const cvUrl = cvFiles["./assets/Faaiz_Main_Resume.pdf"];
+
+function CvDownload() {
+  if (!cvUrl) return null;
+  return (
+    <a className="button button-light" href={cvUrl} download="Faaiz-Ali-Tariq-CV.pdf">
+      Download CV <Download size={17} aria-hidden="true" />
+    </a>
+  );
+}
+
 const projects = [
   {
     number: "01",
-    type: "PROFESSIONAL CASE STUDY",
-    category: "Enterprise data · Revenue intelligence",
-    name: "Aviso",
+    name: "Aviso AI",
+    category: "Revenue intelligence",
+    role: "Backend developer · ~1.5 years on the project",
+    headline: "Moving beyond a monolith. Keeping both sides talking.",
     description:
-      "Worked on an enterprise revenue-intelligence platform, moving data-heavy processing from a Django monolith into Databricks workflows and helping split legacy functionality into services.",
-    detail:
-      "PostgreSQL handled authentication, tenant-user and project-oriented data; MongoDB stored clients’ forecasting data. I also built session-signing compatibility to support authentication across legacy and newer services.",
-    stack: ["Python", "Django", "Databricks", "Redis", "PostgreSQL", "MongoDB"],
+      "An enterprise revenue forecasting platform with a large Django codebase. I worked on moving background tasks to Databricks and extracting services while the existing application stayed in use.",
+    contributions: [
+      [
+        "Event-driven job dispatch",
+        "Built a continuously running Databricks job that reads Redis events and triggers the corresponding job using the event’s job ID.",
+      ],
+      [
+        "Authentication across old and new",
+        "Implemented the auth service with compatible session signing so users could move between the legacy Django application and the new services.",
+      ],
+      [
+        "Shared foundations",
+        "Contributed to the move toward auth, admin, and deal services, with common functionality in a shared library.",
+      ],
+    ],
+    note: "A single page could call both legacy and new APIs. Session compatibility mattered throughout the migration; sharing the signing secret was part of making that work.",
+    flow: ["Redis events", "Databricks dispatcher", "Target job"],
+    stack: ["Python", "Django", "Databricks", "Redis", "Microservices"],
     featured: true,
-    link: "#contact",
   },
   {
     number: "02",
-    type: "PROFESSIONAL CASE STUDY",
-    category: "Risk intelligence · Data ingestion",
-    name: "Dragonfly Intelligence",
+    name: "HottoCare",
+    category: "Healthcare management",
+    role: "Primary backend developer · New system",
+    headline: "A backend built to be extended.",
     description:
-      "Built a news-ingestion and data-processing pipeline for a risk-intelligence product, preparing global news data into structured records, using BigQuery in the processing flow, and persisting cleaned data to PostgreSQL through APIs.",
-    stack: ["Python", "BigQuery", "PostgreSQL", "REST APIs", "RAG pipeline"],
-    featured: false,
-    link: "#contact",
+      "I shaped the Flask backend for a new healthcare management system, taking a layered architecture I’d learned on Dragonfly and adapting it to Firestore.",
+    contributions: [
+      [
+        "Structure on top of NoSQL",
+        "Used Pydantic models to validate data before it reached Firestore. Shared core classes and controllers centralized common behavior, with overrides where needed.",
+      ],
+      [
+        "Workflows for the care team",
+        "Built role-based access for doctors and nurses, patient assignments, and a Google Calendar integration showing doctors their daily meetings.",
+      ],
+    ],
+    note: "The useful lesson from Dragonfly was reuse at the right level: core behavior in one place, with room for individual APIs to differ.",
+    flow: ["API classes", "Controllers", "Validated core models"],
+    stack: ["Flask", "Pydantic", "Firestore", "Google Calendar"],
   },
   {
     number: "03",
-    type: "PROFESSIONAL CASE STUDY",
-    category: "Healthcare · Integrations",
-    name: "HottoCare",
+    name: "Dragonfly Intelligence",
+    category: "Geopolitical risk intelligence",
+    role: "Backend developer · Existing platform",
+    headline: "From processed intelligence to risk ratings.",
     description:
-      "Built core Flask backend functionality for a hospital-management system, including Google OAuth2 sign-in, reusable Pydantic-based CRUD patterns, two-way Google Calendar appointment sync, and patient-report generation.",
-    stack: ["Flask", "Firestore", "Pydantic", "Google Calendar", "python-docx"],
-    featured: false,
-    link: "#contact",
+      "My first production project was a global risk intelligence platform. I contributed APIs within an established backend, including the Precision Risk Ratings API.",
+    contributions: [
+      [
+        "Bulk rating updates",
+        "Implemented an API that ingested processed risk data and updated risk-rating records in PostgreSQL. Upstream pipelines prepared news data collected in BigQuery.",
+      ],
+    ],
+    note: "My contribution was the API and database update layer. The upstream retrieval and data preparation pipelines were already part of the system.",
+    flow: ["Upstream processing", "Ratings API", "PostgreSQL"],
+    stack: ["Python", "REST APIs", "PostgreSQL", "BigQuery ecosystem"],
   },
 ];
 
 const experiments = [
   {
     number: "A",
-    status: "GITHUB · LANGCHAIN",
-    title: "LangChain support agent",
+    status: "PERSONAL PROJECT",
+    title: "StreamForge",
+    subtitle: "An AI assistant with an actual application behind it.",
     description:
-      "A customer-support agent built with LangChain and LangGraph that reasons through requests and calls tools against a shop database — structured output, conversation memory, checkpointing, and human approval before any side-effect tool runs. Runs 100% local on Ollama.",
-    tags: ["LangChain", "LangGraph", "Ollama", "Pydantic", "SQLite"],
-    link: "https://github.com/FaaizAlii/Langchain-Learning",
-    linkText: "Read the code",
+      "A Django streaming-platform project with a support assistant that looks up subscriptions, searches the catalogue, and retrieves policy documents. Customer tools use the authenticated user’s context; chat history is stored in the database.",
+    takeaway:
+      "Database tools for account facts. Retrieval for support documents.",
+    tags: ["Django", "LangChain", "ChromaDB", "Ollama"],
+    link: "https://github.com/FaaizAlii/StreamForge",
+    linkText: "Explore StreamForge",
   },
   {
     number: "B",
-    status: "GITHUB · RAG",
-    title: "RAG pipeline, built from scratch",
+    status: "LEARNING PROJECT",
+    title: "Tool-using support agent",
+    subtitle: "Working through how agents make decisions.",
     description:
-      "Retrieval-augmented generation learned stage by stage instead of copied from a template: SQLite → Pydantic → JSONLoader → LangChain Documents → splitting → embeddings → vector store → retriever → LLM.",
-    tags: ["RAG", "Embeddings", "Vector store", "JSONLoader"],
-    link: "https://github.com/FaaizAlii/RAG_learning",
-    linkText: "Read the code",
+      "A local LangChain and LangGraph experiment with shop database tools, structured output, conversation checkpoints, and human approval before tools that change data.",
+    takeaway: "Exploring where an agent should pause and ask for approval.",
+    tags: ["LangChain", "LangGraph", "SQLite", "Ollama"],
+    link: "https://github.com/FaaizAlii/Langchain-Learning",
+    linkText: "Read the code & notes",
   },
   {
     number: "C",
-    status: "MORE ON GITHUB",
-    title: "And it's all public",
+    status: "LEARNING NOTEBOOKS",
+    title: "RAG, step by step",
+    subtitle: "Understanding what happens before the answer.",
     description:
-      "n8n workflow automation, agent orchestration, and whatever I'm building this month — open source, documented, and free to poke around.",
-    tags: ["n8n", "LangGraph", "Automation"],
-    link: "https://github.com/FaaizAlii",
-    linkText: "Visit my GitHub",
+      "Experiments taking structured records and PDFs through chunking, embeddings, ChromaDB retrieval, and an LLM. Includes notes on why semantic similarity alone can miss an exact customer record.",
+    takeaway:
+      "Learning when to retrieve documents and when to query a database.",
+    tags: ["RAG", "Embeddings", "ChromaDB", "Pydantic"],
+    link: "https://github.com/FaaizAlii/RAG_learning",
+    linkText: "Open the notebooks",
   },
 ];
 
 function SectionLabel({ children }) {
   return <div className="section-label">{children}</div>;
 }
-
+function Flow({ steps }) {
+  return (
+    <ol className="system-flow" aria-label="Simplified system flow">
+      {steps.map((step, i) => (
+        <li key={step}>
+          {i > 0 && <span aria-hidden="true">→</span>}
+          <span>{step}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
 function ProjectCard({ project }) {
   return (
-    <article className={`project-card ${project.featured ? "project-card--featured" : ""}`}>
+    <article
+      className={`project-card ${project.featured ? "project-card--featured" : ""}`}
+    >
       <div className="project-meta">
-        <span>{project.type} / {project.number}</span>
+        <span>PROFESSIONAL WORK / {project.number}</span>
         <span>{project.category}</span>
       </div>
       <h3>{project.name}</h3>
+      <p className="project-role">{project.role}</p>
+      <h4>{project.headline}</h4>
       <p>{project.description}</p>
-      {project.detail && <p>{project.detail}</p>}
+      <Flow steps={project.flow} />
+      <dl className="contributions">
+        {project.contributions.map(([title, text]) => (
+          <div key={title}>
+            <dt>{title}</dt>
+            <dd>{text}</dd>
+          </div>
+        ))}
+      </dl>
+      <details className="engineering-note">
+        <summary>
+          One engineering detail <Plus size={15} aria-hidden="true" />
+        </summary>
+        <p>{project.note}</p>
+      </details>
       <div className="tag-list">
-        {project.stack.map((item) => <span className="tag" key={item}>{item}</span>)}
+        {project.stack.map((item) => (
+          <span className="tag" key={item}>
+            {item}
+          </span>
+        ))}
       </div>
-      <a className="text-link" href={project.link}>
-        Project notes <ArrowUpRight size={16} aria-hidden="true" />
-      </a>
-      {project.featured && <span className="margin-scribble">lots of moving parts!</span>}
     </article>
   );
 }
 
 function App() {
-  const email = "faaizalitariq@gmail.com";
-
   return (
     <div className="paper">
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
       <header className="site-header page-width">
-        <a className="brand" href="#top" aria-label="Back to top">
-          <span className="brand-mark">M.</span>
-          <span>Faaiz Ali's notebook</span>
+        <a
+          className="brand"
+          href="#top"
+          aria-label="Faaiz Ali’s notebook, back to top"
+        >
+          <span className="brand-mark">F.</span>
+          <span>Faaiz Ali’s notebook</span>
         </a>
         <nav className="navigation" aria-label="Main navigation">
           <a href="#work">Work</a>
           <a href="#about">About</a>
           <a href="#lab">Lab notes</a>
-          <a className="nav-contact" href="#contact">Say hello ↗</a>
+          <a className="nav-contact" href="#contact">
+            Say hello ↗
+          </a>
         </nav>
       </header>
-
-      <main>
+      <main id="main">
         <section className="hero page-width" id="top">
-          <span className="margin-note">a few things I've built ↙</span>
           <div className="hero-copy reveal">
-            <p className="eyebrow"><span className="ink-dot" /> Python backend developer · AI engineering</p>
-            <h1>Building useful<br />things with <span className="handwritten underline-ink">thought</span><br />and code.</h1>
+            <p className="eyebrow">
+              <span className="ink-dot" /> Faaiz Ali Tariq · Python backend
+              developer
+            </p>
+            <h1>
+              I build the parts
+              <br />
+              you <span className="handwritten underline-ink">depend on.</span>
+            </h1>
             <p className="intro">
-              I turn messy data, complicated workflows, and real business problems into reliable software — from production APIs and data pipelines to practical experiments with retrieval-augmented generation and AI agents.
+              The API behind a risk rating. The job that keeps data moving. The
+              login that still works while a monolith becomes services.
+            </p>
+            <p className="hero-footnote">
+              That’s the work I’ve done. These days, I’m also bringing that
+              backend experience to AI agents and retrieval systems.
             </p>
             <div className="hero-actions">
-              <a className="button button-dark" href="#work">Explore my work <ArrowDownRight size={17} /></a>
-              <a className="button button-light" href="#contact">Get in touch <ArrowUpRight size={17} /></a>
+              <CvDownload />
+              <a className="button button-dark" href="#work">
+                See the work <ArrowDownRight size={17} aria-hidden="true" />
+              </a>
+              <a
+                className="button button-light"
+                href="https://github.com/FaaizAlii"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Browse my GitHub <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
             </div>
           </div>
-
-          <aside className="sketch-sheet reveal" aria-label="Notebook sketch of a software system">
-            <div className="sheet-heading"><span>FIELD NOTES / 001</span><span>build · test · improve</span></div>
-            <svg className="system-sketch" viewBox="0 0 300 220" role="img" aria-label="Sketch of connected software components">
-              <g fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M35 40 Q31 34 39 32 L111 31 Q119 32 117 40 L116 78 Q115 84 107 83 L40 84 Q33 83 34 76Z" />
-                <path d="M48 48 L103 48 M48 59 L91 59 M48 70 L98 70" />
-                <path d="M184 40 Q180 34 188 32 L260 31 Q268 32 266 40 L265 78 Q264 84 256 83 L189 84 Q182 83 183 76Z" />
-                <path d="M197 48 L252 48 M197 59 L240 59 M197 70 L247 70" />
-                <path d="M117 59 C140 59 158 59 183 59" strokeDasharray="4 5" />
-                <path d="M175 53 L183 59 L175 65" />
-                <path d="M150 85 L150 117 M144 109 L150 117 L156 109" />
-                <path d="M61 135 Q57 129 65 127 L235 127 Q243 128 241 136 L240 178 Q239 184 231 183 L66 184 Q59 183 60 176Z" />
-                <path d="M78 145 L222 145 M78 157 L194 157 M78 169 L211 169" />
-                <path d="M27 113 Q8 103 18 91" stroke="var(--accent)" />
-                <path d="M11 98 L18 91 L24 99" stroke="var(--accent)" />
-                <path d="M260 111 Q285 97 285 119 Q285 132 266 135" stroke="var(--accent)" />
-                <path d="M273 127 L266 135 L276 137" stroke="var(--accent)" />
-                <path d="M112 204 Q149 196 188 204" stroke="var(--accent)" />
-              </g>
-            </svg>
-            <p className="sheet-caption">“Make the complex feel simple.”</p>
-            <div className="tag-list tag-list-center">
-              <span className="tag">Python</span><span className="tag">APIs</span><span className="tag">Data systems</span><span className="tag">RAG / LLMs</span>
+          <aside className="sketch-sheet reveal" aria-label="About Faaiz">
+            <div className="sheet-heading">
+              <span>THE PERSON / 001</span>
+              <span>backend, mostly.</span>
+            </div>
+            <div className="portrait-wrap">
+              <img
+                className="portrait"
+                src={portrait}
+                alt="Faaiz Ali Tariq"
+                width="240"
+                height="240"
+                fetchPriority="high"
+              />
+              <span className="portrait-caption handwritten">
+                Hi, I’m Faaiz.
+              </span>
+            </div>
+            <p className="sheet-caption">
+              A good backend leaves room
+              <br />
+              for the next person to build.
+            </p>
+            <div className="sheet-signoff">
+              <span>Writing Python since 2023</span>
+              <span className="handwritten">still taking notes ↗</span>
             </div>
           </aside>
         </section>
-
-        <div className="portrait-divider page-width reveal">
-          <img
-            className="portrait-circle"
-            src={portrait}
-            alt="Portrait of Faaiz Ali Tariq"
-          />
-          <span className="portrait-note handwritten">
-            <svg className="portrait-arrow" viewBox="0 0 46 36" aria-hidden="true">
-              <g fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M43 8 C31 3 15 9 8 25" />
-                <path d="M4 15 L8 26 L18 23" />
-              </g>
-            </svg>
-            the human behind the commits
-          </span>
+        <div className="experience-strip page-width">
+          <span className="handwritten">A few pages from the job →</span>
+          <a href="#project-aviso">Enterprise migrations</a>
+          <span aria-hidden="true">/</span>
+          <a href="#project-hottocare">Backend architecture</a>
+          <span aria-hidden="true">/</span>
+          <a href="#project-dragonfly">Risk data APIs</a>
         </div>
-
         <section className="section page-width" id="work">
           <div className="section-heading reveal">
-            <div><SectionLabel>01 / selected work</SectionLabel><h2>Real systems.<br /><span className="handwritten">Real problems.</span></h2></div>
-            <p>A few projects from my professional work, focused on the engineering decisions behind the product — not just a list of technologies.</p>
+            <div>
+              <SectionLabel>01 / from the day job</SectionLabel>
+              <h2>
+                What I worked on.
+                <br />
+                <span className="handwritten">And what it took.</span>
+              </h2>
+            </div>
+            <p>
+              Three projects, at different stages: contributing to an
+              established platform, shaping a new backend, and helping a large
+              application evolve.
+            </p>
           </div>
           <div className="project-grid">
-            {projects.map((project) => <ProjectCard key={project.number} project={project} />)}
+            {projects.map((project) => (
+              <div
+                className={
+                  project.featured
+                    ? "project-slot project-slot--featured"
+                    : "project-slot"
+                }
+                id={`project-${project.number === "01" ? "aviso" : project.number === "02" ? "hottocare" : "dragonfly"}`}
+                key={project.number}
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))}
           </div>
         </section>
-
         <section className="section page-width about-section" id="about">
           <aside className="note-card reveal">
-            <h3>What I keep coming back to <span>✎</span></h3>
+            <h3>A few things the work taught me ✎</h3>
             <ul>
-              <li>Make APIs predictable and maintainable.</li>
-              <li>Move heavy work to the right place.</li>
-              <li>Keep data flows understandable.</li>
-              <li>Use AI where it solves a real problem.</li>
-              <li>Learn by building, testing, and refining.</li>
+              <li>A migration is also a compatibility problem.</li>
+              <li>NoSQL still needs a data contract.</li>
+              <li>Shared code should make the next API easier.</li>
+              <li>An agent needs the right tools and boundaries.</li>
             </ul>
-            <span className="note-stamp">NOTES TO SELF</span>
+            <span className="note-stamp">LEARNED BY DOING</span>
           </aside>
           <div className="about-copy reveal">
-            <SectionLabel>02 / a little about me</SectionLabel>
-            <h2>Backend first.<br /><span className="handwritten">Curious by default.</span></h2>
-            <p>I have around three years of professional experience building Python backend systems. My work has included APIs, multi-tenant data models, distributed processing, legacy-system modernization, and third-party integrations.</p>
-            <p>Alongside production engineering, I’m expanding into AI engineering: retrieval-augmented generation, embeddings and vector search, LLM tool calling, and agent workflows. I distinguish professional delivery from skills I’m developing through personal projects.</p>
+            <SectionLabel>02 / how I got here</SectionLabel>
+            <h2>
+              Learn it. Build it.
+              <br />
+              <span className="handwritten">Keep going.</span>
+            </h2>
+            <p>
+              I started as an intern in November 2023, learning Python and
+              Django and building an e-commerce backend. On 9 March 2024, I
+              joined the same company as a backend developer.
+            </p>
+            <p>
+              Since then, I’ve worked inside a mature risk intelligence
+              platform, taken primary responsibility for a new healthcare
+              backend, and spent around a year and a half on Aviso’s background
+              processing and service migration.
+            </p>
+            <p>
+              Now I’m exploring LangChain, LangGraph, and retrieval systems
+              through personal projects. I like the part where an AI feature has
+              to connect to real application data, respect a user’s access, and
+              do something useful.
+            </p>
             <div className="skills-grid">
-              <div className="skill-item"><Code2 size={19} /><div><strong>Backend engineering</strong><span>Python · Django · Flask · FastAPI · REST</span></div></div>
-              <div className="skill-item"><Database size={19} /><div><strong>Data & infrastructure</strong><span>PostgreSQL · MongoDB · Redis · BigQuery</span></div></div>
-              <div className="skill-item"><Workflow size={19} /><div><strong>Integrations</strong><span>OAuth2 · Google Calendar · Firestore · Celery</span></div></div>
-              <div className="skill-item"><Sparkles size={19} /><div><strong>AI engineering</strong><span>RAG · embeddings · ChromaDB · LangChain</span></div></div>
+              <div className="skill-item">
+                <Code2 size={19} aria-hidden="true" />
+                <div>
+                  <strong>Backend</strong>
+                  <span>Python · Django · Flask · Pydantic</span>
+                </div>
+              </div>
+              <div className="skill-item">
+                <Database size={19} aria-hidden="true" />
+                <div>
+                  <strong>Data & processing</strong>
+                  <span>PostgreSQL · Firestore · Redis · Databricks</span>
+                </div>
+              </div>
+              <div className="skill-item">
+                <Workflow size={19} aria-hidden="true" />
+                <div>
+                  <strong>Systems & integrations</strong>
+                  <span>REST APIs · sessions · Google Calendar</span>
+                </div>
+              </div>
+              <div className="skill-item">
+                <Sparkles size={19} aria-hidden="true" />
+                <div>
+                  <strong>Currently building with</strong>
+                  <span>LangChain · LangGraph · ChromaDB · Ollama</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
-
         <section className="section page-width" id="lab">
           <div className="section-heading reveal">
-            <div><SectionLabel>03 / hands-on AI</SectionLabel><h2>Things I actually <span className="handwritten">know.</span></h2></div>
-            <p>Don’t just take my word for it — my latest LangChain and RAG work is open source. Read the code, run it locally, judge for yourself.</p>
+            <div>
+              <SectionLabel>03 / after hours</SectionLabel>
+              <h2>
+                Code you can <span className="handwritten">look through.</span>
+              </h2>
+            </div>
+            <p>
+              Personal projects and learning notebooks. A place to try ideas,
+              understand the moving parts, and leave a record of what I learned.
+            </p>
           </div>
           <div className="lab-grid">
             {experiments.map((item) => (
               <article className="lab-card reveal" key={item.number}>
-                <div className="lab-status">{item.status} / {item.number}</div>
+                <div className="lab-status">
+                  {item.status} / {item.number}
+                </div>
                 <h3>{item.title}</h3>
+                <h4>{item.subtitle}</h4>
                 <p>{item.description}</p>
-                <div className="tag-list">{item.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}</div>
-                <a className="text-link" href={item.link} target="_blank" rel="noreferrer">
-                  {item.linkText} <ArrowUpRight size={15} aria-hidden="true" />
+                <p className="lab-takeaway">{item.takeaway}</p>
+                <div className="tag-list">
+                  {item.tags.map((tag) => (
+                    <span className="tag" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  className="text-link"
+                  href={item.link}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {item.linkText}
+                  <ArrowUpRight size={15} aria-hidden="true" />
                 </a>
               </article>
             ))}
           </div>
+          <a
+            className="text-link github-link"
+            href="https://github.com/FaaizAlii"
+            target="_blank"
+            rel="noreferrer"
+          >
+            The rest of my notebooks live on GitHub{" "}
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
         </section>
-
         <section className="contact-section" id="contact">
           <div className="page-width reveal">
-            <SectionLabel>04 / your turn</SectionLabel>
-            <h2>Have a tricky backend problem?<br /><span className="handwritten">Let's work it out.</span></h2>
-            <p>I’m open to backend engineering, data-heavy applications, and practical AI/LLM projects.</p>
+            <SectionLabel>04 / next page</SectionLabel>
+            <h2>
+              Need someone who’ll
+              <br />
+              <span className="handwritten">work through the details?</span>
+            </h2>
+            <p>
+              I’m interested in Python backend roles and practical AI
+              applications.
+              <br />
+              Tell me what you’re building.
+            </p>
             <div className="hero-actions contact-actions">
-              <a className="button button-dark" href={`mailto:${email}`}>Email me <Mail size={16} /></a>
-              <a className="button button-light" href="#top">Back to the top ↑</a>
+              <CvDownload />
+              <a
+                className="button button-dark"
+                href="mailto:faaizalitariq@gmail.com"
+              >
+                Let’s talk <Mail size={16} aria-hidden="true" />
+              </a>
+              <a
+                className="contact-email"
+                href="mailto:faaizalitariq@gmail.com"
+              >
+                faaizalitariq@gmail.com
+              </a>
             </div>
             <div className="social-links">
-              <a href="https://github.com/FaaizAlii" target="_blank" rel="noreferrer">
-                <Code2 size={16} /> GitHub
+              <a
+                href="https://github.com/FaaizAlii"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Code2 size={16} aria-hidden="true" />
+                GitHub
               </a>
-              <a href="https://www.linkedin.com/in/faaiz-ali-tariq" target="_blank" rel="noreferrer">
-                <UserRound size={16} /> LinkedIn
+              <a
+                href="https://www.linkedin.com/in/faaiz-ali-tariq"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <UserRound size={16} aria-hidden="true" />
+                LinkedIn
               </a>
               <a href="tel:+923012808120">
-                <Phone size={16} /> +92 301 2808120
+                <Phone size={16} aria-hidden="true" />
+                +92 301 2808120
               </a>
             </div>
           </div>
         </section>
       </main>
-
       <footer className="site-footer page-width">
-        <span>© {new Date().getFullYear()} · Faaiz Ali's notebook</span>
-        <span>Made with curiosity, care, and a few scribbles.</span>
+        <span>© {new Date().getFullYear()} · Faaiz Ali Tariq</span>
+        <span className="handwritten">Always room for another page.</span>
         <a href="#top">Back to first page ↑</a>
       </footer>
     </div>
   );
 }
-
 export default App;
