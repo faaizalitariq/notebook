@@ -112,7 +112,7 @@ const experiments = [
     takeaway:
       "Database tools for account facts. Retrieval for support documents.",
     tags: ["Django", "LangChain", "ChromaDB", "Ollama"],
-    link: "https://github.com/FaaizAlii/StreamForge",
+    link: "https://github.com/faaizalitariq/StreamForge",
     linkText: "Explore StreamForge",
   },
   {
@@ -124,7 +124,7 @@ const experiments = [
       "A local LangChain and LangGraph experiment with shop database tools, structured output, conversation checkpoints, and human approval before tools that change data.",
     takeaway: "Exploring where an agent should pause and ask for approval.",
     tags: ["LangChain", "LangGraph", "SQLite", "Ollama"],
-    link: "https://github.com/FaaizAlii/Langchain-Learning",
+    link: "https://github.com/faaizalitariq/Langchain-Learning",
     linkText: "Read the code & notes",
   },
   {
@@ -137,7 +137,7 @@ const experiments = [
     takeaway:
       "Learning when to retrieve documents and when to query a database.",
     tags: ["RAG", "Embeddings", "ChromaDB", "Pydantic"],
-    link: "https://github.com/FaaizAlii/RAG_learning",
+    link: "https://github.com/faaizalitariq/RAG_learning",
     linkText: "Open the notebooks",
   },
 ];
@@ -247,7 +247,7 @@ function App() {
               </a>
               <a
                 className="button button-light"
-                href="https://github.com/FaaizAlii"
+                href="https://github.com/faaizalitariq"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -435,7 +435,7 @@ function App() {
           </div>
           <a
             className="text-link github-link"
-            href="https://github.com/FaaizAlii"
+            href="https://github.com/faaizalitariq"
             target="_blank"
             rel="noreferrer"
           >
@@ -474,7 +474,7 @@ function App() {
             </div>
             <div className="social-links">
               <a
-                href="https://github.com/FaaizAlii"
+                href="https://github.com/faaizalitariq"
                 target="_blank"
                 rel="noreferrer"
               >

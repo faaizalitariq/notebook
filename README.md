@@ -41,7 +41,7 @@ The workflow in `.github/workflows/deploy-pages.yml` builds and deploys on pushe
 
 Enable **Settings → Pages → Source → GitHub Actions** once. GitHub Pages requires a public repository on GitHub Free, or a qualifying paid plan for a private repository.
 
-Expected URL after successful deployment: `https://faaizalii.github.io/notebook/`.
+Expected URL after successful deployment: `https://faaizalitariq.github.io/notebook/`.
 
 ## CV download
 
