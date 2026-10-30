@@ -85,19 +85,19 @@ const projects = [
     number: "03",
     name: "Dragonfly Intelligence",
     category: "Geopolitical risk intelligence",
-    role: "Backend developer · Existing platform",
-    headline: "From processed intelligence to risk ratings.",
+    role: "Backend developer · Risk data workflows",
+    headline: "Keeping global risk intelligence up to date.",
     description:
-      "My first production project was a global risk intelligence platform. I contributed APIs within an established backend, including the Precision Risk Ratings API.",
+      "Worked on an established global risk intelligence platform, taking ownership of backend components for risk data processing and rating updates.",
     contributions: [
       [
-        "Bulk rating updates",
-        "Implemented an API that ingested processed risk data and updated risk-rating records in PostgreSQL. Upstream pipelines prepared news data collected in BigQuery.",
+        "Risk data workflows",
+        "Built backend workflows that brought processed intelligence into PostgreSQL and kept risk-rating data up to date, integrating with the platform’s existing BigQuery data ecosystem.",
       ],
     ],
-    note: "My contribution was the API and database update layer. The upstream retrieval and data preparation pipelines were already part of the system.",
-    flow: ["Upstream processing", "Ratings API", "PostgreSQL"],
-    stack: ["Python", "REST APIs", "PostgreSQL", "BigQuery ecosystem"],
+    note: "Worked within an established architecture to connect processed intelligence with the data used for risk assessments, following the platform’s shared backend patterns.",
+    flow: ["Processed intelligence", "Risk data workflows", "PostgreSQL"],
+    stack: ["Python", "Data processing", "PostgreSQL", "BigQuery ecosystem"],
   },
 ];
 
@@ -234,7 +234,7 @@ function App() {
               <span className="handwritten underline-ink">{headline.emphasis}</span>
             </h1>
             <p className="intro">
-              The API behind a risk rating. The job that keeps data moving. The
+              The systems behind risk intelligence. The job that keeps data moving. The
               login that still works while a monolith becomes services.
             </p>
             <p className="hero-footnote">
@@ -291,7 +291,7 @@ function App() {
           <span aria-hidden="true">/</span>
           <a href="#project-hottocare">Backend architecture</a>
           <span aria-hidden="true">/</span>
-          <a href="#project-dragonfly">Risk data APIs</a>
+          <a href="#project-dragonfly">Risk data systems</a>
         </div>
         <section className="section page-width" id="work">
           <div className="section-heading reveal">
