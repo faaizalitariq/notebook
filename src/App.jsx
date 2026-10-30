@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import "./App.css";
 import portrait from "./images/portrait-480.webp";
+import { headline } from "./data/headlines";
 
 // The download appears automatically once the approved CV PDF is added.
 const cvFiles = import.meta.glob("./assets/Faaiz_Main_Resume.pdf", {
@@ -228,9 +229,10 @@ function App() {
               developer
             </p>
             <h1>
-              I build the parts
+              {headline.line}
               <br />
-              you <span className="handwritten underline-ink">depend on.</span>
+              {headline.lead}
+              <span className="handwritten underline-ink">{headline.emphasis}</span>
             </h1>
             <p className="intro">
               The API behind a risk rating. The job that keeps data moving. The

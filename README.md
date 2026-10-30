@@ -43,6 +43,10 @@ Enable **Settings → Pages → Source → GitHub Actions** once. GitHub Pages r
 
 Expected URL after successful deployment: `https://faaizalitariq.github.io/notebook/`.
 
+## Hero headlines
+
+Edit the five headline variants in `src/data/headlines.js`. A random line is selected locally once per page load and stays fixed while reading. Consecutive repeats are avoided within the same tab when session storage is available; no network request is needed.
+
 ## CV download
 
 Place the approved PDF at `src/assets/Faaiz_Main_Resume.pdf`, then build or push to `main`. A **Download CV** button automatically appears in the introduction and contact sections. Downloads use the filename `Faaiz-Ali-Tariq-CV.pdf`. Replace the PDF at the same path to update it.
