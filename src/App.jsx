@@ -2,7 +2,6 @@ import {
   ArrowDownRight,
   Download,
   ArrowUpRight,
-  Mail,
   Code2,
   Database,
   Workflow,
@@ -461,12 +460,6 @@ function App() {
             </p>
             <div className="hero-actions contact-actions">
               <CvDownload />
-              <a
-                className="button button-dark"
-                href="mailto:faaizalitariq@gmail.com"
-              >
-                Let’s talk <Mail size={16} aria-hidden="true" />
-              </a>
               <a
                 className="contact-email"
                 href="mailto:faaizalitariq@gmail.com"
