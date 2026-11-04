@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   ArrowDownRight,
   Download,
@@ -13,6 +14,7 @@ import {
 import "./App.css";
 import portrait from "./images/portrait-480.webp";
 import { headline } from "./data/headlines";
+import { useNotebookMotion } from "./hooks/useNotebookMotion";
 
 // The download appears automatically once the approved CV PDF is added.
 const cvFiles = import.meta.glob("./assets/Faaiz_Main_Resume.pdf", {
@@ -25,7 +27,11 @@ const cvUrl = cvFiles["./assets/Faaiz_Main_Resume.pdf"];
 function CvDownload() {
   if (!cvUrl) return null;
   return (
-    <a className="button button-light" href={cvUrl} download="Faaiz-Ali-Tariq-CV.pdf">
+    <a
+      className="button button-light"
+      href={cvUrl}
+      download="Faaiz-Ali-Tariq-CV.pdf"
+    >
       Download CV <Download size={17} aria-hidden="true" />
     </a>
   );
@@ -158,6 +164,17 @@ function Flow({ steps }) {
   );
 }
 function ProjectCard({ project }) {
+  const [notesOpen, setNotesOpen] = useState(
+    () => window.matchMedia("(min-width: 761px)").matches,
+  );
+
+  useEffect(() => {
+    const layout = window.matchMedia("(min-width: 761px)");
+    const syncLayout = () => setNotesOpen(layout.matches);
+    layout.addEventListener("change", syncLayout);
+    return () => layout.removeEventListener("change", syncLayout);
+  }, []);
+
   return (
     <article
       className={`project-card ${project.featured ? "project-card--featured" : ""}`}
@@ -171,19 +188,28 @@ function ProjectCard({ project }) {
       <h4>{project.headline}</h4>
       <p>{project.description}</p>
       <Flow steps={project.flow} />
-      <dl className="contributions">
-        {project.contributions.map(([title, text]) => (
-          <div key={title}>
-            <dt>{title}</dt>
-            <dd>{text}</dd>
-          </div>
-        ))}
-      </dl>
-      <details className="engineering-note">
+      <details
+        className="project-notes"
+        open={notesOpen}
+        onToggle={(event) => setNotesOpen(event.currentTarget.open)}
+      >
         <summary>
-          One engineering detail <Plus size={15} aria-hidden="true" />
+          Project notes <Plus size={15} aria-hidden="true" />
         </summary>
-        <p>{project.note}</p>
+        <div className="project-notes-body">
+          <dl className="contributions">
+            {project.contributions.map(([title, text]) => (
+              <div key={title}>
+                <dt>{title}</dt>
+                <dd>{text}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="engineering-note">
+            <h5>One engineering detail</h5>
+            <p>{project.note}</p>
+          </div>
+        </div>
       </details>
       <div className="tag-list">
         {project.stack.map((item) => (
@@ -197,6 +223,8 @@ function ProjectCard({ project }) {
 }
 
 function App() {
+  const activeChapter = useNotebookMotion();
+
   return (
     <div className="paper">
       <a className="skip-link" href="#main">
@@ -211,13 +239,24 @@ function App() {
           <span className="brand-mark">F.</span>
           <span>Faaiz Ali’s notebook</span>
         </a>
-        <nav className="navigation" aria-label="Main navigation">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#lab">Lab notes</a>
-          <a className="nav-contact" href="#contact">
-            Say hello ↗
-          </a>
+        <nav className="navigation" aria-label="Notebook chapters">
+          {[
+            ["work", "Work", "01"],
+            ["about", "About", "02"],
+            ["lab", "Lab notes", "03"],
+            ["contact", "Say hello", "04"],
+          ].map(([id, label, number]) => (
+            <a
+              href={`#${id}`}
+              key={id}
+              aria-current={activeChapter === id ? "location" : undefined}
+            >
+              <span className="nav-number" aria-hidden="true">
+                {number}
+              </span>
+              {label}
+            </a>
+          ))}
         </nav>
       </header>
       <main id="main">
@@ -231,11 +270,14 @@ function App() {
               {headline.line}
               <br />
               {headline.lead}
-              <span className="handwritten underline-ink">{headline.emphasis}</span>
+              <span className="handwritten underline-ink">
+                {headline.emphasis}
+              </span>
             </h1>
             <p className="intro">
-              The systems behind risk intelligence. The job that keeps data moving. The
-              login that still works while a monolith becomes services.
+              The systems behind risk intelligence. The job that keeps data
+              moving. The login that still works while a monolith becomes
+              services.
             </p>
             <p className="hero-footnote">
               That’s the work I’ve done. These days, I’m also bringing that
@@ -314,8 +356,8 @@ function App() {
               <div
                 className={
                   project.featured
-                    ? "project-slot project-slot--featured"
-                    : "project-slot"
+                    ? "project-slot project-slot--featured reveal"
+                    : "project-slot reveal"
                 }
                 id={`project-${project.number === "01" ? "aviso" : project.number === "02" ? "hottocare" : "dragonfly"}`}
                 key={project.number}

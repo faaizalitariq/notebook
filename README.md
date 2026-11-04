@@ -8,10 +8,10 @@ A personal portfolio for my backend engineering work and AI projects, designed a
 
 - Professional project write-ups and links to public projects
 - Randomized hero headlines with no consecutive repeats within a tab
-- Expandable engineering notes
+- Loose-leaf project sheets with folded corners and expandable engineering notes
+- Scroll-triggered unfolding transitions with reduced-motion support
 - Downloadable CV
-- Responsive layouts and keyboard navigation
-- Reduced-motion support
+- Responsive layouts, mobile chapter navigation, and keyboard access
 - Automatic deployment to GitHub Pages
 
 ## Stack
@@ -46,6 +46,7 @@ src/
   App.css                     Layout and component styles
   index.css                   Global styles and theme variables
   data/headlines.js           Hero headline variants and selection
+  hooks/useNotebookMotion.js  Scroll reveals and active chapter tracking
   assets/Faaiz_Main_Resume.pdf Downloadable CV
   images/                     Portrait assets
   main.jsx                    React entry point
