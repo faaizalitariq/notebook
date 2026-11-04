@@ -301,7 +301,7 @@ function App() {
           <aside className="sketch-sheet reveal" aria-label="About Faaiz">
             <div className="sheet-heading">
               <span>THE PERSON / 001</span>
-              <span>backend, mostly.</span>
+              <span>Python · systems · AI</span>
             </div>
             <div className="portrait-wrap">
               <img
