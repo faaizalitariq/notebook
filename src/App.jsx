@@ -82,10 +82,14 @@ const projects = [
         "Workflows for the care team",
         "Built role-based access for doctors and nurses, patient assignments, and a Google Calendar integration showing doctors their daily meetings.",
       ],
+      [
+        "Detailed patient reports",
+        "Implemented a system to generate detailed patient reports in DOCX format using python-docx.",
+      ],
     ],
     note: "The useful lesson from Dragonfly was reuse at the right level: core behavior in one place, with room for individual APIs to differ.",
     flow: ["API classes", "Controllers", "Validated core models"],
-    stack: ["Flask", "Pydantic", "Firestore", "Google Calendar"],
+    stack: ["Flask", "Pydantic", "Firestore", "Google Calendar", "python-docx"],
   },
   {
     number: "03",
