@@ -84,7 +84,7 @@ const projects = [
       ],
       [
         "Detailed patient reports",
-        "Implemented a system to generate detailed patient reports in DOCX format using python-docx.",
+        "Built a report-generation workflow that retrieved patient data from Firestore, organized it into a structured report, and produced consistently formatted DOCX documents using python-docx for use in Google Docs.",
       ],
     ],
     note: "The useful lesson from Dragonfly was reuse at the right level: core behavior in one place, with room for individual APIs to differ.",
