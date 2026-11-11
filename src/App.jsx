@@ -114,6 +114,20 @@ const projects = [
 const experiments = [
   {
     number: "A",
+    status: "DESKTOP APPLICATION",
+    title: "Fatima Lab Manager",
+    subtitle: "Software built around a real working day.",
+    description:
+      "Built for my dad’s diagnostic lab, this offline desktop app brings patient billing, payments, referral commissions, and expenses into one place. Local SQLite storage, formatted Excel reports, and daily backups support the lab’s day-to-day work.",
+    takeaway:
+      "Referral commissions follow payments received, while unpaid balances remain tracked as outstanding dues.",
+    tags: ["Electron", "JavaScript", "SQLite", "ExcelJS"],
+    link: "https://github.com/faaizalitariq/lab-manager",
+    linkText: "Explore Lab Manager",
+    featured: true,
+  },
+  {
+    number: "B",
     status: "PERSONAL PROJECT",
     title: "StreamForge",
     subtitle: "An AI assistant with an actual application behind it.",
@@ -126,7 +140,7 @@ const experiments = [
     linkText: "Explore StreamForge",
   },
   {
-    number: "B",
+    number: "C",
     status: "LEARNING PROJECT",
     title: "Tool-using support agent",
     subtitle: "Working through how agents make decisions.",
@@ -138,7 +152,7 @@ const experiments = [
     linkText: "Read the code & notes",
   },
   {
-    number: "C",
+    number: "D",
     status: "LEARNING NOTEBOOKS",
     title: "RAG, step by step",
     subtitle: "Understanding what happens before the answer.",
@@ -447,13 +461,16 @@ function App() {
               </h2>
             </div>
             <p>
-              Personal projects and learning notebooks. A place to try ideas,
-              understand the moving parts, and leave a record of what I learned.
+              Practical tools, personal projects, and learning notebooks.
+              Software shaped by everyday workflows and hands-on experiments.
             </p>
           </div>
           <div className="lab-grid">
             {experiments.map((item) => (
-              <article className="lab-card reveal" key={item.number}>
+              <article
+                className={`lab-card reveal${item.featured ? " lab-card--featured" : ""}`}
+                key={item.number}
+              >
                 <div className="lab-status">
                   {item.status} / {item.number}
                 </div>
