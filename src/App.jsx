@@ -114,6 +114,21 @@ const projects = [
 const experiments = [
   {
     number: "A",
+    id: "vehicle-monitor",
+    status: "COMPUTER VISION PROJECT",
+    title: "Vehicle Monitor",
+    subtitle: "From video frames to tracked vehicles and readable plates.",
+    description:
+      "Built a FastAPI service for vehicle detection, tracking, and plate reading from recorded video. YOLO and local OCR process frames on the CPU, with annotated browser previews, per-vehicle records, and estimated counts for cars, bikes, buses, and trucks.",
+    takeaway:
+      "New plate identities need two agreeing, high-confidence readings. Plate matching helps reconnect returning vehicles and reduce duplicate counts.",
+    tags: ["FastAPI", "YOLO", "OpenCV", "RapidOCR"],
+    link: "https://github.com/faaizalitariq/vehicle-monitor",
+    linkText: "Explore Vehicle Monitor",
+    featured: true,
+  },
+  {
+    number: "B",
     status: "DESKTOP APPLICATION",
     title: "Fatima Lab Manager",
     subtitle: "Software built around a real working day.",
@@ -127,7 +142,7 @@ const experiments = [
     featured: true,
   },
   {
-    number: "B",
+    number: "C",
     status: "PERSONAL PROJECT",
     title: "StreamForge",
     subtitle: "An AI assistant with an actual application behind it.",
@@ -140,7 +155,7 @@ const experiments = [
     linkText: "Explore StreamForge",
   },
   {
-    number: "C",
+    number: "D",
     status: "LEARNING PROJECT",
     title: "Tool-using support agent",
     subtitle: "Working through how agents make decisions.",
@@ -152,7 +167,7 @@ const experiments = [
     linkText: "Read the code & notes",
   },
   {
-    number: "D",
+    number: "E",
     status: "LEARNING NOTEBOOKS",
     title: "RAG, step by step",
     subtitle: "Understanding what happens before the answer.",
@@ -469,6 +484,7 @@ function App() {
             {experiments.map((item) => (
               <article
                 className={`lab-card reveal${item.featured ? " lab-card--featured" : ""}`}
+                id={item.id}
                 key={item.number}
               >
                 <div className="lab-status">

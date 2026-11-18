@@ -695,6 +695,7 @@ h4 {
   align-items: start;
 }
 .lab-card {
+  scroll-margin-top: 32px;
   --paper-tilt: -0.8deg;
   position: relative;
   display: flex;
@@ -1289,7 +1290,7 @@ h4 {
   }
 }
 
-/* A full-width project sheet leads into the smaller learning notes. */
+/* Featured project sheets lead into the smaller learning notes. */
 .lab-card--featured {
   --paper-tilt: 0.2deg;
 }
